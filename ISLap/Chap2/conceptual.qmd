@@ -78,11 +78,29 @@ The $x$-axis should represent the amount of flexibility in the method, and the $
 for each curve. There should be five curves. Make sure to label each one.
 
 ```{julia}
+
 using Plots
 
 # Dummy curves for representation, ignore actual form
 berror(x) = 1
 sbias(x) = 1/x
+trainerror(x) = 3 - x
+testerror(x) = -x^2 + 2
+variance(x) = sqrt(x)
 
-plot(berror, label="Sq. Bias", ylabel="Value", xlabel="Flexibility", title="Error curves sketched")
+
+plot(sbias, label="Sq. Bias", ylabel="Value", xlabel="Flexibility",
+     title="Error curves sketched", xlims=(0,3), ylims=(0,3),
+     xticks=([0.5,2.5], ["Less Flexible", "More Flexible"]))
+plot!(berror, label="Bayes error")
+plot!(trainerror, label="Training Error")
+plot!(variance, label="Variance")
+
 ```
+
+## Part b
+
+> Explain why each of the five curves has the shape displayed in part (a).
+
+The squared bias is expected to decrease with more flexible models since flexibility allows for the model to better fit
+the data. On the other hand, such fitting exacerbates the model's variance.
